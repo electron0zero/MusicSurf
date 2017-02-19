@@ -27,7 +27,7 @@ This will be an WebApp which will interact with Query Engine via HTTP
 **Index** - This will be created by Index Builder and Query Engine will perform queries on it. 
     It will be rebuilt/refreshed when required.
 
-![Flow Diagrams](https://i.imgur.com/XIkWNUY.png)
+![Flow Diagrams](flow.png)
 
 ## Intended Audience
 
