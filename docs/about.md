@@ -25,7 +25,7 @@ This will be an WebApp which will interact with Query Engine via HTTP
 **Index** - This will be created by Index Builder and Query Engine will perform queries on it. 
     It will be rebuilt/refreshed when required.
 
-![Flow Diagrams](https://raw.githubusercontent.com/electron0zero/MusicSurf/master/docs/flow.png?token=AJEB0_zoXT04I14VAdKItS68_gPOmTGvks5YldMewA%3D%3D)
+![Flow Diagrams](flow.png)
 
 ## Intended Audience
 
