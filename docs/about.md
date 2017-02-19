@@ -1,6 +1,8 @@
-# About Project
+# Name: MusicSurf
 
-## Name: MusicSurf
+### Team: Surajnath Sidh, Raghav Mittal, Rajdeep Mukherjee
+
+# About Project
 
 ## Description 
 
@@ -25,7 +27,7 @@ This will be an WebApp which will interact with Query Engine via HTTP
 **Index** - This will be created by Index Builder and Query Engine will perform queries on it. 
     It will be rebuilt/refreshed when required.
 
-![Flow Diagrams](flow.png)
+![Flow Diagrams](https://i.imgur.com/XIkWNUY.png)
 
 ## Intended Audience
 
