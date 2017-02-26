@@ -6,9 +6,13 @@
     </head>
     <body>
     	<h1>Hi {{ username }}</h1>
-        <form>
-            Query <input type="text" />
-            <input type="submit" name="Search" method="POST" />
+        <form action = "http://127.0.0.1:2000/" method = post>
+            {{ form.hidden_tag() }}
+            {{ form.name.label }}{{ form.name }}
+            {{ form.submit }}
+            {% for message in form.name.errors %}
+         <div>{{ message }}</div>
+      {% endfor %}
         </form>
     </body>
 </html>
