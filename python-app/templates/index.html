@@ -11,8 +11,13 @@
             {{ form.name.label }}{{ form.name }}
             {{ form.submit }}
             {% for message in form.name.errors %}
-         <div>{{ message }}</div>
-      {% endfor %}
+                <div>{{ message }}</div>
+            {% endfor %}
         </form>
+        <div class="results">
+            {% if results %}
+                {{ results }}
+            {% endif %}
+        </div>
     </body>
 </html>
