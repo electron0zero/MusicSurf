@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <title>
+            MusicSurf
+        </title>
+    </head>
+    <body>
+    	<h1>Hi {{ username }}</h1>
+        <form action = "http://127.0.0.1:2000/" method = post>
+            {{ form.hidden_tag() }}
+            {{ form.name.label }}{{ form.name }}
+            {{ form.submit }}
+            {% for message in form.name.errors %}
+                <div>{{ message }}</div>
+            {% endfor %}
+        </form>
+        <div class="results">
+            {% if results %}
+                {{ results }}
+            {% endif %}
+        </div>
+    </body>
+</html>
