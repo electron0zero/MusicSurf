@@ -1,5 +1,5 @@
 '''
-this module contains functions that extracts metadata from
+This module contains functions that extracts metadata from
 mp3 file and returns a python dict of UniCode Characters
 NOTE : Windows Doesn't support unicode in powershell and console by default
 
@@ -8,13 +8,16 @@ run `chcp 65001` if you getting errors related to unicode in windows
 
 from mutagen.id3 import ID3
 from bs4 import UnicodeDammit
+from collections import OrderedDict
 import os
 import re
 import json
+import glob
 
+# NOTE: I have converted everything to Unicode
+# if you don't need unicode then remove metaDataDictToUnicode call in
+# getMetadataDict
 
-# NOTE: Few Gotchas : i have converted everything to Unicode
-# if you don't need unicode then, don't convert it to Unicode 
 
 def getMetadataDict(mp3file):
     # print(mp3file)
@@ -51,12 +54,12 @@ def getMetadataDict(mp3file):
                 metaDataDict["year"] = year.encode(encoding='utf_8')
             # file path
             metaDataDict["path"] = mp3file
-
-        return metaDataDictToUnicode(metaDataDict)
+        # return metaDataDictToUnicode(metaDataDict)
     else:
         print("no mp3 file, mp3 file is None")
         # return empty dict because other functions are consuming it
-        return metaDataDictToUnicode(metaDataDict)
+    # TODO: add missing keys with empty value
+    return orderMetaDataDict(metaDataDictToUnicode(metaDataDict))
 
 
 def metaDataDictToUnicode(metaDataDict):
@@ -69,19 +72,42 @@ def metaDataDictToUnicode(metaDataDict):
     return uniText
 
 
-root_path = r"C:\Users\Electron\Music\test_music_mp3"
-filename = r"Dream.mp3"
-path = os.path.join(root_path, filename)
-meta_data = getMetadataDict(path)
-# print(meta_data)
-for key in meta_data:
-    print(key + ": ", end="")
-    print(meta_data[key])
+def orderMetaDataDict(metaDataDict):
+    """ This function takes a Meta Data dict and converts it into a ordered dict
+    with inserting "" if a key is not in passed dict, keys are specified below
+    keys(in order): title, artist, album, year, lyrics, path
+    """
+    ordered = OrderedDict()
+    ordered['title'] = metaDataDict.get("title", "")
+    ordered['artist'] = metaDataDict.get("artist", "")
+    ordered['album'] = metaDataDict.get("album", "")
+    ordered['year'] = metaDataDict.get("year", "")
+    ordered['lyrics'] = metaDataDict.get("lyrics", "")
+    ordered['path'] = metaDataDict.get("path", "")
+    return ordered
 
-# TODO: Rearrange items in dict in a fixed order, now order is random
-# use OrderedDict to maintain order, OrderedDict keeps elements in
-# insertion order.
 
-# converts a dict to JSON String
-# json_dump = json.dumps(meta_data)
-# print(json_dump)
+def crawlDir(PATH):
+    # PATH      the dir
+    # /**       every file and dir under PATH
+    # /*.mp3    every file that ends with '.mp3'
+    files = [file for file in glob.glob(PATH + '/**/*.mp3', recursive=True)]
+    return files
+
+
+def main():
+    root_path = r"C:\Users\Electron\Music\test_music"
+    mp3_files = crawlDir(root_path)
+    dicts = []
+    for item in mp3_files:
+        meta_data = getMetadataDict(item)
+        dicts.append(meta_data)
+
+    # print(len(dicts))
+    # Produces Valid JSON (RFC 4627)
+    # https://jsonformatter.curiousconcept.com/#
+    with open('id3data.json', 'w') as outfile:
+        json.dump(dicts, outfile)
+
+if __name__ == '__main__':
+    main()

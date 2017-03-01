@@ -6,7 +6,7 @@
 - path [file-path]
 
 genre is omitted because it's is generally not available in file metadata.
-If available it is highly opinionated so we decided to omit it.  
+If available it is highly opinionated so we decided to omit it.
 
 use the music repair tool to correct ID3 Tags
 https://github.com/ProjectRecommend/MusicRepair
