@@ -4,7 +4,6 @@
 {% endblock %}
 {% block body %}
     <div class="mdl-grid">
-      <div class="mdl-cell mdl-cell--4-col"></div>
       <div class="mdl-cell mdl-cell--4-col">
           <form action = "http://127.0.0.1:2000/" method = post>
               {{ form.hidden_tag() }}
@@ -13,19 +12,26 @@
                     {% if field.type is equalto 'TextField' %}
                         {{ field.label(class_="mdl-textfield__label") }}
                         {{ field(class_="mdl-textfield__input") }}
-
                     {% elif field.type == 'SubmitField' %}
-                    <!-- {{ field.label }}{{ field }} -->
-                    {% elif field.type == 'CheckboxInput' %}
-                    {{ field.label(class_="mdl-textfield__label") }}
-                    {{ field(class_="mdl-textfield__input") }}
                     {% endif %}
+                    <!-- {{ field.label }}{{ field }} -->
                 {% endfor %}
+
+
               </div>
                <br/>
-
               <p>Filters</p>
-              <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-1">
+              {% for field in form %}
+                  {% if field.type == 'BooleanField' %}
+                    <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="{{ field.name }}">
+                        {{ field(class_="mdl-checkbox__input") }}
+                        <span class="mdl-checkbox__label">{{ field.name }}</span>
+                    </label>
+                  {% endif %}
+              {% endfor %}
+
+
+              <!-- <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-1">
               <input type="checkbox" id="checkbox-1" class="mdl-checkbox__input" name="title">
               <span class="mdl-checkbox__label">Title</span>
             </label>
@@ -40,16 +46,16 @@
             <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-4">
               <input type="checkbox" id="checkbox-4" class="mdl-checkbox__input">
               <span class="mdl-checkbox__label">Lyrics</span>
-            </label>
+            </label> -->
           </form>
       </div>
 
-      <div class="mdl-cell mdl-cell--4-col">
+      <div class="mdl-cell mdl-cell--8-col">
           <div class="results">
-    {% if results %}
-        {{ results }}
-    {% endif %}
-</div>
+            {% if results %}
+                {{ results }}
+            {% endif %}
+        </div>
       </div>
     </div>
 
