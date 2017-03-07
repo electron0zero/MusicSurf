@@ -1,5 +1,12 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+
+'''
+This program implements basic search operations using Elastic search API.
+INPUT: query (search key), boolean values (filters), search index name
+OUTPUT: raw results in JSON form.
+'''
+
 from flask import Flask, render_template, request, flash
 from forms import QueryForm
 from config import INDEX, PORT, HOST, SECRET_KEY
@@ -20,18 +27,10 @@ app.secret_key = SECRET_KEY
 
 es = Elasticsearch()
 
-
-# res = es.search(index=INDEX, body=payload)
-# print("Got %d Hits:" % res['hits']['total'])
-# print(res['hits']['total'])
-
 # create API request and send to elastic search server
 # return search results in JSON form
 
 def apiCall(data, filterDict):
-
-    # data = data.replace(" ", "&")
-    # print(data)
 
     if bool(filterDict):
         filterJSON = json.dumps(filterDict)
@@ -76,19 +75,9 @@ def main():
             flash('required')
             return render_template('index.html', form=form)
         else:
-
-            # print(form.title.data)
-            # print(form.author.data)
-            # print(form.lyrics.data)
-
             filterDict = makeFiltersList(form)
             print(filterDict)
             results = apiCall(form.search_key.data, filterDict)
-
-            # print(results.data)
-            # print(results.status_code)
-            # print(results.url)
-
             return render_template('index.html', form=form,
                                    results=json.dumps(results, indent=4))
 
