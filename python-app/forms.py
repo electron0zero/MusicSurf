@@ -10,7 +10,10 @@ from wtforms import TextField, SubmitField, ValidationError, validators, Boolean
 
 
 class QueryForm(Form):
-    name = TextField("Query", [validators.Required("requried")])
+    search_key= TextField("Type and press Enter", [validators.Required("requried")])
+    title = BooleanField('Title', default=False)
+    author = BooleanField('Author', default=False)
+    lyrics = BooleanField('Lyrics', default=False)
     submit = SubmitField("Search")
     #
     # string_of_files = ['one\r\ntwo\r\nthree\r\n']
