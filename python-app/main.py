@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 from flask import Flask, render_template, request, flash
 from forms import QueryForm
-import requests
 from config import INDEX, PORT, HOST, SECRET_KEY
 from elasticsearch import Elasticsearch
 import json
