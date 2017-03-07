@@ -13,6 +13,7 @@ def test(indexName,type):
     url="http://localhost:9200/%s/%s/1"%(indexName,type)
     r=requests.put(url,data=data)
     print(r.json())
+
 def createIndex(indexName,type):
     """
     indexName=string
@@ -44,5 +45,6 @@ def main():
     createIndex("rajdeepindex","names")
     postDocument("rajdeepindex","names",[{"name":"world"},{"name":"hello"}])
     test("carindex","cars")
+
 if __name__=="__main__":
     main()
