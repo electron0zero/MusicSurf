@@ -103,8 +103,14 @@ class PreProcessing:
         except Exception as ex:
             print(colored(ex,'red'))
     
-                
-            
+class IndexHandle:
+    """
+    IndexHandle is used for handling queries from users to Elastic Search
+    """
+    def __init__(self,indexName):
+        self.indexName=indexName
+    
+    
 
     
     
