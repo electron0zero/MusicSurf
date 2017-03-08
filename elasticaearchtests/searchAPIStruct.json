@@ -1,0 +1,54 @@
+{
+"query":
+{
+    "bool":
+    {
+    "should":[
+        {
+        "match":{
+            "title":"value"
+        }
+        },
+        {
+        "match":{
+            "artist":"value"
+        }
+        },
+        {
+            "match":{
+                "album":"value"
+            }
+        },
+        {
+            "match":{
+                "year":"value"
+            }
+        },
+        {
+            "match":{
+                "lyrics":"value"
+            }
+        }
+        ],
+        "filter":[
+            {
+                "term":{
+                    "title":"value"
+                }
+                    
+            },
+            {
+                "term":{
+                    "artist":"value"
+                }
+            },
+            {
+                "term":{
+                    "lyrics":"value"
+                }
+            }
+        ]
+    }
+
+    }
+}

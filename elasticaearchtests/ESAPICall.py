@@ -100,12 +100,23 @@ class SearchHandle:
 
     def search(self, query, filters):
         """
-        search query based on options in the filters
+        search query based on options in the filters, Filters provided are title, author and lyrics
         updates number of documents (self.numDocuments)
         Returns the whole document as a dictionary
         """
-                
-    
+        """
+        The search API to be followed here is the one given under tests/elasticSearchSearchAPI.md
+        """     
+        jsonData=open("indexConfig.json")
+        data=json.load(jsonData)
+        # data now is of type dictionary
+        innerList=data["query"]["bool"]["should"]
+        filterList=data["query"]["bool"]["filter"]
+        # innerList is now a list of individual <match> elements
+        # filterList is now a list of individual filter elements namely title, artist and lyrics
+        for i in innerList:
+            # now each of these elements is a dictionary
+            
 
     
     
