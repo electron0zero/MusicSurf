@@ -8,7 +8,6 @@ ESAPICall or Elastic Search API Call will handle all elastic search API calls:
 import os
 import requests
 import json
-os.system('python -m pip install termcolor')
 from termcolor import colored
 class PreProcessing:
     """
@@ -17,36 +16,7 @@ class PreProcessing:
     Installed elasticsearch on the local machine in the current working directory
     """
     def __init__(self):
-        
-    
-    def startES(self):
-        """
-        Attempts starting Elastic Search server
-        """
-        dir=os.getcwd()
-        if os.chdir(dir+'\\elasticsearch-5.2.1\\bin') == 1:
-            # this means NZEC and hence the directory was not found
-            print(colored("Pre-requisites not met: Could not find elasticsearch in the current working directory","red"))
-        if os.name=='nt':
-            # system is windows
-            os.system('elasticsearch')
-        else:
-            # system is anything but windows, assuming linux
-            os.system('./elasticsearch')
-
-    def isESRunning(self):
-        """
-        returns id es is running or not
-        """
-        path='http://localhost:9200'
-        command='curl '+path
-        response=os.system(command)
-        if response==0:
-            # Zero exit code indicating ES server is running
-            return True
-        else:
-            print(colored("Something went wrong, Elastic Search server could not start properly","red"))
-            return False
+        self.dummy=0    
 
     def createIndex(self, indexName):
         """
@@ -78,11 +48,11 @@ class PreProcessing:
                 settings=json.dumps(settings)
                 data=settings
                 r=requests.put(url,data=data)
-                    return r.text
+                return r.text
             else:
                 raise NameError('indexName should be all lowercase')
         except Exception as ex:
-            print(colored(ex,'red'))
+            print(colored(str(ex),'red'))
     def postDocument(self, indexName, type, documents):
         """
         post documents in defined index
@@ -101,7 +71,7 @@ class PreProcessing:
                 if r.status_code != 200:
                     raise Exception(r.text)
         except Exception as ex:
-            print(colored(ex,'red'))
+            print(colored(str(ex),'red'))
     
 class IndexHandle:
     """

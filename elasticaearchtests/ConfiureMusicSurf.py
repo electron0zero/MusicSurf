@@ -7,17 +7,14 @@ class PreProcessing:
     unzipped and installed
     python modules include:
     - requests (for making API calls to ES server)
-    - json  (for handling json files)
     - termcolor (for colored output on the terminal)
     - wget (for downloading files from internet)
+    - httplib2
     """
     def __init__(self):
         # install all dependencies
         try:
-            os.system('python -m pip install requests')
-            os.system('python -m pip install json')
-            os.system('python -m pip install termcolor')
-            os.system('python -m pip install wget')
+            os.system('python -m pip install -r requirements.txt')
             # refers to the elasticSearch Download URL
             self.ESURL='https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.2.2.zip'
             self.zipFileName=""
@@ -40,6 +37,8 @@ class PreProcessing:
             import zipfile
             zip=zipfile.ZipFile(self.zipFileName)
             zip.extractall()
+        except Exception as ex:
+            print("could not extract from the zip file error: "+str(ex))
 
     def startES(self):
         # Attempts starting Elastic Search server
@@ -67,3 +66,4 @@ class PreProcessing:
         else:
             print(colored("Something went wrong, Elastic Search server could not start properly","red"))
             return False
+    
