@@ -78,14 +78,17 @@ class SearchHandle:
     """
     IndexHandle is an iterator class and returns iterator instances on query results from Elastic Search
     """
-    def __init__(self, indexName, type, query, filters):
+    def __init__(self, indexName, type, query, filter):
+        upperCaseLetters=[c for c in indexName if c.isUpper()]
+        if len(upperCaseLetters)!=0:
+            raise NameError('indexName should be only in lowercase')
         self.indexName=indexName
         self.type=type
         self.query=query
-        self.filters=filters
+        self.filter=filter
         self.numDocuments=0
         # self.results is a list of all documents returned
-        self.results=self.search(query, filters)
+        self.results=self.search()
     
     def __iter__(self):
         self.n=0
@@ -98,7 +101,7 @@ class SearchHandle:
         else:
             raise StopIteration
 
-    def search(self, query, filters):
+    def search(self):
         """
         search query based on options in the filters, Filters provided are title, author and lyrics
         updates number of documents (self.numDocuments)
@@ -116,7 +119,39 @@ class SearchHandle:
         # filterList is now a list of individual filter elements namely title, artist and lyrics
         for i in innerList:
             # now each of these elements is a dictionary
-            
+            x=i["match"].keys()[0]
+            i["match"][x]=self.query
+        # now the filterList has to be changed according to the filter list provided as arguement
+        for i in filterList:
+            x=i["term"].keys()[0]
+            if x=="title":
+                if self.filter["title"]==1:
+                    i["term"][x]=self.query    
+                else:
+                    del filterList[0]
+            elif x=="artist":
+                if self.filter["author"]==1:
+                    i["term"][x]=self.query
+                else:
+                    del filterList[1]
+            else:
+                if self.filter["lyrics"]==1:
+                    i["term"][x]=self.query
+                else:
+                    del filterList[2]
+        # so that constructs the data for the search 
+        data["query"]["bool"]["should"]=innerList
+        data["query"]["bool"]["filter"]=filterList
+        # so the data itself is now the data we want
+        url="http://localhost:9200/%s/%s"%(self.indexName,'_search')
+        r=requests.get(url,data=data)
+        return self.parseResponse(r)
+    
+    def parseResponse(self, r):
+        """
+        Parses the response elasticsearch search
+        r is the response object
+        """
 
     
     
