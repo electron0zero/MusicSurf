@@ -6,47 +6,44 @@
     "should":[
         {
         "match":{
-            "title":"value"
+            "title":{
+                "query":"queryString",
+                "boost":1
+            }
         }
         },
         {
         "match":{
-            "artist":"value"
-        }
-        },
-        {
-            "match":{
-                "album":"value"
-            }
-        },
-        {
-            "match":{
-                "year":"value"
-            }
-        },
-        {
-            "match":{
-                "lyrics":"value"
+            "artist":{
+                "query":"queryString",
+                "boost":1
             }
         }
-        ],
-        "filter":[
-            {
-                "term":{
-                    "title":"value"
-                }
-                    
-            },
-            {
-                "term":{
-                    "artist":"value"
-                }
-            },
-            {
-                "term":{
-                    "lyrics":"value"
+        },
+        {
+            "match":{
+                "album":{
+                    "query":"queryString",
+                    "boost":1
                 }
             }
+        },
+        {
+            "match":{
+                "year":{
+                    "query":"queryString",
+                    "boost":1
+                }
+            }
+        },
+        {
+            "match":{
+                "lyrics":{
+                    "query":"queryString",
+                    "boost":1
+                }
+            }
+        }
         ]
     }
 

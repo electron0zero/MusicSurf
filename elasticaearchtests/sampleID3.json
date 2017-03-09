@@ -1,0 +1,27 @@
+{
+
+     "doc1":{
+        "title": "A Head Full Of Dreams",
+        "artist": "Coldplay Coldplay Coldplay",
+        "album": "A Head Full Of Dreams",
+        "year": "2015",
+        "lyrics": "",
+        "path": "C:\\Users\\Electron\\Music\\test_music\\Coldplay\\A Head Full Of Dreams\\Coldplay - A Head Full Of Dreams.mp3"
+    },
+    "doc2":{
+        "title": "Adventure Of A Lifetime",
+        "artist": "Coldplay Coldplay Coldplay",
+        "album": "A Head Full Of Dreams",
+        "year": "2015",
+        "lyrics": "",
+        "path": "C:\\Users\\Electron\\Music\\test_music\\Coldplay\\A Head Full Of Dreams\\Coldplay - Adventure Of A Lifetime.mp3"
+    },
+    "doc3":{
+        "title": "Amazing Day",
+        "artist": "Coldplay Coldplay Coldplay",
+        "album": "A Head Full Of Dreams",
+        "year": "2015",
+        "lyrics": "",
+        "path": "C:\\Users\\Electron\\Music\\test_music\\Coldplay\\A Head Full Of Dreams\\Coldplay - Amazing Day.mp3"
+    }
+}

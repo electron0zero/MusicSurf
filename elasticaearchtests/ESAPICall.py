@@ -39,7 +39,7 @@ class IndexGeneration:
         - path: text
         """
         try:
-            upperCaseLetters=[c for c in self.indexName if c.isUpper()]
+            upperCaseLetters=[c for c in self.indexName if c.isupper()]
             if len(upperCaseLetters) == 0:
                 url="http://localhost:9200/%s"%(self.indexName)
 
@@ -57,29 +57,33 @@ class IndexGeneration:
     def postDocument(self, documents):
         """
         post documents in defined index
-        documents is a list dictionaries defining documents
+        documents is a list of dictionaries defining documents
         """
         
         try:
             numDocument=1
             if len(documents) == 0:
-                raise ValueError('No values foundin documents')
+                raise ValueError('No values found in documents')
+            
             for document in documents:
                 url="http://localhost:9200/%s/%s/%d"%(self.indexName,self.type,numDocument)
                 data=json.dumps(document)
                 r=requests.post(url,data=data)
                 numDocument+=1
-                if r.status_code != 200:
+                response=r.json()
+                if "error" in response:
                     raise Exception(r.text)
+            print("no of documents:"+str(numDocument))
         except Exception as ex:
+            print ("----------------Exception occured--------------")
             print(colored(str(ex),'red'))
     
-class SearchHandle:
+class IndexHandle:
     """
     IndexHandle is an iterator class and returns iterator instances on query results from Elastic Search
     """
     def __init__(self, indexName, type, query, filter):
-        upperCaseLetters=[c for c in indexName if c.isUpper()]
+        upperCaseLetters=[c for c in indexName if c.isupper()]
         if len(upperCaseLetters)!=0:
             raise NameError('indexName should be only in lowercase')
         self.indexName=indexName
@@ -110,50 +114,61 @@ class SearchHandle:
         """
         The search API to be followed here is the one given under tests/elasticSearchSearchAPI.md
         """     
-        jsonData=open("indexConfig.json")
+        jsonData=open("searchAPIStruct.json")
         data=json.load(jsonData)
         # data now is of type dictionary
         innerList=data["query"]["bool"]["should"]
-        filterList=data["query"]["bool"]["filter"]
         # innerList is now a list of individual <match> elements
         # filterList is now a list of individual filter elements namely title, artist and lyrics
+        print ("printing keys")
         for i in innerList:
             # now each of these elements is a dictionary
-            x=i["match"].keys()[0]
-            i["match"][x]=self.query
-        # now the filterList has to be changed according to the filter list provided as arguement
-        for i in filterList:
-            x=i["term"].keys()[0]
-            if x=="title":
-                if self.filter["title"]==1:
-                    i["term"][x]=self.query    
-                else:
-                    del filterList[0]
-            elif x=="artist":
-                if self.filter["author"]==1:
-                    i["term"][x]=self.query
-                else:
-                    del filterList[1]
-            else:
-                if self.filter["lyrics"]==1:
-                    i["term"][x]=self.query
-                else:
-                    del filterList[2]
+            key=list(i["match"].keys())[0]
+            i["match"][key]["query"]=self.query
+            try:
+                if self.filter[key]==1:
+                    i["match"][key]["boost"]+=1
+            except KeyError:
+                continue 
+
         # so that constructs the data for the search 
         data["query"]["bool"]["should"]=innerList
-        data["query"]["bool"]["filter"]=filterList
         # so the data itself is now the data we want
         url="http://localhost:9200/%s/%s"%(self.indexName,'_search')
-        r=requests.get(url,data=data)
+        r=requests.get(url,data=json.dumps(data))
         return self.parseResponse(r)
     
     def parseResponse(self, r):
         """
-        Parses the response elasticsearch search
+        Parses the response of elasticsearch search
         r is the response object
         """
+        # requests module comes with response.json() method that works with response instances and can be used to convert the 
+        # whole response in json if possible
+        jsonData=r.json()
+        # jsonData is now a dictionary
+        self.numDocuments=jsonData["hits"]["total"]
+        print (type(jsonData["hits"]["hits"]))
+        return jsonData["hits"]["hits"]
 
-    
-    
+# DEBUG: Do not include main in release 
+def main():
+    index=IndexGeneration('musicindex','music');
+    index.createIndex()
+    # file=open("sampleID3.json")
+    # data=json.load(file)
+    # docs=data.values()
+    file=open("id3data.json")
+    docs=json.load(file)
+    index.postDocument(docs)
+    handle=IndexHandle('musicindex','music','Dream',{"title":0,"artist":0,"lyrics":1})
+    print("printing results")
+    for i in handle:
+         print("--------------------------------------------------------------------------------")
+         print(json.dumps(i))
+
+# DEBUG: Not to be included in release
+if __name__=="__main__":
+    main()    
 
     
