@@ -1,0 +1,33 @@
+[2017-03-09T23:49:52,529][INFO ][o.e.n.Node               ] [] initializing ...
+[2017-03-09T23:49:53,790][INFO ][o.e.e.NodeEnvironment    ] [OijNd91] using [1] data paths, mounts [[(C:)]], net usable_space [37.3gb], net total_space [323.4gb], spins? [unknown], types [NTFS]
+[2017-03-09T23:49:53,791][INFO ][o.e.e.NodeEnvironment    ] [OijNd91] heap size [1.9gb], compressed ordinary object pointers [true]
+[2017-03-09T23:49:53,813][INFO ][o.e.n.Node               ] node name [OijNd91] derived from node ID [OijNd91PSyybeMsGqvnLGQ]; set [node.name] to override
+[2017-03-09T23:49:53,855][INFO ][o.e.n.Node               ] version[5.2.2], pid[13656], build[f9d9b74/2017-02-24T17:26:45.835Z], OS[Windows 10/10.0/amd64], JVM[Oracle Corporation/Java HotSpot(TM) 64-Bit Server VM/1.8.0_92/25.92-b14]
+[2017-03-09T23:50:04,367][INFO ][o.e.p.PluginsService     ] [OijNd91] loaded module [aggs-matrix-stats]
+[2017-03-09T23:50:04,369][INFO ][o.e.p.PluginsService     ] [OijNd91] loaded module [ingest-common]
+[2017-03-09T23:50:04,371][INFO ][o.e.p.PluginsService     ] [OijNd91] loaded module [lang-expression]
+[2017-03-09T23:50:04,371][INFO ][o.e.p.PluginsService     ] [OijNd91] loaded module [lang-groovy]
+[2017-03-09T23:50:04,372][INFO ][o.e.p.PluginsService     ] [OijNd91] loaded module [lang-mustache]
+[2017-03-09T23:50:04,372][INFO ][o.e.p.PluginsService     ] [OijNd91] loaded module [lang-painless]
+[2017-03-09T23:50:04,373][INFO ][o.e.p.PluginsService     ] [OijNd91] loaded module [percolator]
+[2017-03-09T23:50:04,373][INFO ][o.e.p.PluginsService     ] [OijNd91] loaded module [reindex]
+[2017-03-09T23:50:04,374][INFO ][o.e.p.PluginsService     ] [OijNd91] loaded module [transport-netty3]
+[2017-03-09T23:50:04,375][INFO ][o.e.p.PluginsService     ] [OijNd91] loaded module [transport-netty4]
+[2017-03-09T23:50:04,376][INFO ][o.e.p.PluginsService     ] [OijNd91] no plugins loaded
+[2017-03-09T23:50:22,248][INFO ][o.e.n.Node               ] initialized
+[2017-03-09T23:50:22,253][INFO ][o.e.n.Node               ] [OijNd91] starting ...
+[2017-03-09T23:50:26,545][INFO ][o.e.t.TransportService   ] [OijNd91] publish_address {127.0.0.1:9300}, bound_addresses {127.0.0.1:9300}, {[::1]:9300}
+[2017-03-09T23:50:29,819][INFO ][o.e.c.s.ClusterService   ] [OijNd91] new_master {OijNd91}{OijNd91PSyybeMsGqvnLGQ}{Uy2bJTc6QzyP4iDwQEBwfw}{127.0.0.1}{127.0.0.1:9300}, reason: zen-disco-elected-as-master ([0] nodes joined)
+[2017-03-09T23:50:30,108][INFO ][o.e.g.GatewayService     ] [OijNd91] recovered [0] indices into cluster_state
+[2017-03-09T23:50:31,363][INFO ][o.e.h.HttpServer         ] [OijNd91] publish_address {127.0.0.1:9200}, bound_addresses {127.0.0.1:9200}, {[::1]:9200}
+[2017-03-09T23:50:31,364][INFO ][o.e.n.Node               ] [OijNd91] started
+[2017-03-09T23:50:59,991][INFO ][o.e.c.r.a.DiskThresholdMonitor] [OijNd91] low disk watermark [85%] exceeded on [OijNd91PSyybeMsGqvnLGQ][OijNd91][C:\Users\riflerRick\Desktop\NiitUniversityCSE_course\3rdyr\semester6\InformationRetrieval\MusicSurf\elasticaearchtests\elasticsearch-5.2.2\data\nodes\0] free: 37.3gb[11.5%], replicas will not be assigned to this node
+[2017-03-09T23:51:30,006][INFO ][o.e.c.r.a.DiskThresholdMonitor] [OijNd91] low disk watermark [85%] exceeded on [OijNd91PSyybeMsGqvnLGQ][OijNd91][C:\Users\riflerRick\Desktop\NiitUniversityCSE_course\3rdyr\semester6\InformationRetrieval\MusicSurf\elasticaearchtests\elasticsearch-5.2.2\data\nodes\0] free: 37.3gb[11.5%], replicas will not be assigned to this node
+[2017-03-09T23:52:00,014][INFO ][o.e.c.r.a.DiskThresholdMonitor] [OijNd91] low disk watermark [85%] exceeded on [OijNd91PSyybeMsGqvnLGQ][OijNd91][C:\Users\riflerRick\Desktop\NiitUniversityCSE_course\3rdyr\semester6\InformationRetrieval\MusicSurf\elasticaearchtests\elasticsearch-5.2.2\data\nodes\0] free: 37.3gb[11.5%], replicas will not be assigned to this node
+[2017-03-09T23:52:30,027][INFO ][o.e.c.r.a.DiskThresholdMonitor] [OijNd91] low disk watermark [85%] exceeded on [OijNd91PSyybeMsGqvnLGQ][OijNd91][C:\Users\riflerRick\Desktop\NiitUniversityCSE_course\3rdyr\semester6\InformationRetrieval\MusicSurf\elasticaearchtests\elasticsearch-5.2.2\data\nodes\0] free: 37.3gb[11.5%], replicas will not be assigned to this node
+[2017-03-09T23:53:00,037][INFO ][o.e.c.r.a.DiskThresholdMonitor] [OijNd91] low disk watermark [85%] exceeded on [OijNd91PSyybeMsGqvnLGQ][OijNd91][C:\Users\riflerRick\Desktop\NiitUniversityCSE_course\3rdyr\semester6\InformationRetrieval\MusicSurf\elasticaearchtests\elasticsearch-5.2.2\data\nodes\0] free: 37.3gb[11.5%], replicas will not be assigned to this node
+[2017-03-09T23:53:30,048][INFO ][o.e.c.r.a.DiskThresholdMonitor] [OijNd91] low disk watermark [85%] exceeded on [OijNd91PSyybeMsGqvnLGQ][OijNd91][C:\Users\riflerRick\Desktop\NiitUniversityCSE_course\3rdyr\semester6\InformationRetrieval\MusicSurf\elasticaearchtests\elasticsearch-5.2.2\data\nodes\0] free: 37.3gb[11.5%], replicas will not be assigned to this node
+[2017-03-09T23:54:00,056][INFO ][o.e.c.r.a.DiskThresholdMonitor] [OijNd91] low disk watermark [85%] exceeded on [OijNd91PSyybeMsGqvnLGQ][OijNd91][C:\Users\riflerRick\Desktop\NiitUniversityCSE_course\3rdyr\semester6\InformationRetrieval\MusicSurf\elasticaearchtests\elasticsearch-5.2.2\data\nodes\0] free: 37.3gb[11.5%], replicas will not be assigned to this node
+[2017-03-09T23:54:11,547][INFO ][o.e.c.m.MetaDataCreateIndexService] [OijNd91] [musicindex] creating index, cause [auto(index api)], templates [], shards [5]/[1], mappings []
+[2017-03-09T23:54:15,389][INFO ][o.e.c.m.MetaDataMappingService] [OijNd91] [musicindex/LLwqWhV0T62hiRp6ebrzUw] create_mapping [music]
+[2017-03-09T23:54:30,266][INFO ][o.e.c.r.a.DiskThresholdMonitor] [OijNd91] low disk watermark [85%] exceeded on [OijNd91PSyybeMsGqvnLGQ][OijNd91][C:\Users\riflerRick\Desktop\NiitUniversityCSE_course\3rdyr\semester6\InformationRetrieval\MusicSurf\elasticaearchtests\elasticsearch-5.2.2\data\nodes\0] free: 37.3gb[11.5%], replicas will not be assigned to this node
