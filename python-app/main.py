@@ -30,6 +30,7 @@ es = Elasticsearch()
 # create API request and send to elastic search server
 # return search results in JSON form
 
+
 def apiCall(data, filterDict):
 
     if bool(filterDict):

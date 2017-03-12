@@ -1,5 +1,7 @@
 import os
 # installs all dependencies
+
+
 class PreProcessing:
     """
     Dependencies:
@@ -11,53 +13,54 @@ class PreProcessing:
     - wget (for downloading files from internet)
     - httplib2
     """
+
     def __init__(self):
         # install all dependencies
         try:
             os.system('python -m pip install -r requirements.txt')
             # refers to the elasticSearch Download URL
-            self.ESURL='https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.2.2.zip'
-            self.zipFileName=""
-            self.directory=""
+            self.ESURL = 'https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.2.2.zip'
+            self.zipFileName = ""
+            self.directory = ""
         except Exception as ex:
-            print("Error occured in initialization: "+str(ex))
-    
+            print("Error occured in initialization: " + str(ex))
+
     def downloadES(self):
         # downloads ElasticSearch from official website
         # downloaded in the current working directory
         try:
             import wget
             print("downloading ElasticSearch...Hang Tight")
-            self.zipFileName=wget.download(self.ESURL)
+            self.zipFileName = wget.download(self.ESURL)
         except Exception as ex:
-            print("Error in downloadES: "+str(ex))
+            print("Error in downloadES: " + str(ex))
 
     def unzipES(self):
         # unzip and store in the current working directory
         try:
             import zipfile
-            print ("Unzipping ElasticSearch...")
-            zip=zipfile.ZipFile(self.zipFileName)
+            print("Unzipping ElasticSearch...")
+            zip = zipfile.ZipFile(self.zipFileName)
             # zip=zipfile.ZipFile(self.zipFileName)
             zip.extractall()
         except Exception as ex:
-            print("could not extract from the zip file error: "+str(ex))
+            print("could not extract from the zip file error: " + str(ex))
 
     def startES(self):
         # Attempts starting Elastic Search server
-        dir=os.getcwd()
-        if os.chdir(dir+'\\elasticsearch-5.2.2\\bin') == 1:
+        dir = os.getcwd()
+        if os.chdir(dir + '\\elasticsearch-5.2.2\\bin') == 1:
             # this means NZEC and hence the directory was not found
-            print(colored("Pre-requisites not met: Could not find elasticsearch in the current working directory","red"))
-        if os.name=='nt':
+            print(colored(
+                "Pre-requisites not met: Could not find elasticsearch in the current working directory", "red"))
+        if os.name == 'nt':
             # system is windows
-            print ("starting ElasticSearch...")
+            print("starting ElasticSearch...")
             os.system('elasticsearch')
         else:
             # system is anything but windows, assuming linux
             os.system('./elasticsearch')
 
-    
 
 # DEBUG: Do not add in release version:
 # def main():
