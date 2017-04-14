@@ -1,2 +1,2 @@
 # Tests
-automated tests lives here
+automated tests belongs here

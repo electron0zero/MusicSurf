@@ -42,10 +42,9 @@ see `/docs` folder for documentation
 
 - .github : Pull request and issue templates [see more](https://github.com/blog/2111-issue-and-pull-request-templates)
 - docs : documentation
--
--
+- musicsurf : core code of project
+- scripts : helper scripts
 - tests : automated tests (unit/integration tests)
-
 
 ## Need Help
 
