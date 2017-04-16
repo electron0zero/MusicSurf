@@ -1,6 +1,6 @@
 """
 ESAPICall or Elastic Search API Call will handle all elastic search API calls:
-- Creating index and confiuring its settings and mappings
+- Creating index and configuring its settings and mappings
 - Posting documents
 - Tuning filters 
 - Searching queries

@@ -1,5 +1,4 @@
 beautifulsoup4==4.4.1
-requests==2.9.1
 mutagen==1.34.1
 pylint==1.6.4
 elasticsearch==5.2.0
@@ -7,3 +6,6 @@ Flask==0.12
 Flask-WTF==0.14.2
 Jinja2==2.9.5
 WTForms==2.1
+requests==2.13.0
+termcolor==1.1.0
+wget==3.2

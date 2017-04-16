@@ -1,4 +1,4 @@
-from PrepareEnv.ConfigureMusicSurf import PreProcessing
+from ConfigureMusicSurf import PreProcessing
 
 
 def main():

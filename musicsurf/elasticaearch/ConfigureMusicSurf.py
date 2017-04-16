@@ -17,13 +17,12 @@ class PreProcessing:
     def __init__(self):
         # install all dependencies
         try:
-            os.system('python -m pip install -r requirements.txt')
             # refers to the elasticSearch Download URL
             self.ESURL = 'https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.2.2.zip'
             self.zipFileName = ""
             self.directory = ""
         except Exception as ex:
-            print("Error occured in initialization: " + str(ex))
+            print("Error occurred in initialization: " + str(ex))
 
     def downloadES(self):
         # downloads ElasticSearch from official website

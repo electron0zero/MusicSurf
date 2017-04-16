@@ -8,3 +8,4 @@ SECRET_KEY = "mylovelykey"
 # ELASTIC SEARCH
 # name of index and type to search in
 INDEX = "musicindex"
+
