@@ -1,6 +1,6 @@
 """
 ESAPICall or Elastic Search API Call will handle all elastic search API calls:
-- Creating index and configuring its settings and mappings
+- Creating index and confiuring its settings and mappings
 - Posting documents
 - Tuning filters 
 - Searching queries
@@ -118,9 +118,14 @@ class IndexHandle:
 
     def __iter__(self):
         self.n = 0
+        # self.results=self.search()
+        print("num of documents:"+str(self.numDocuments))
         return self
 
     def __next__(self):
+        # print("")
+        if self.numDocuments>10:
+            self.numDocuments=10
         if self.n < self.numDocuments:
             self.n += 1
             return self.results[self.n - 1]
@@ -169,9 +174,17 @@ class IndexHandle:
         # requests module comes with response.json() method that works with response instances and can be used to convert the
         # whole response in json if possible
         jsonData = r.json()
+        # print("printing the json Data")
+        # print(jsonData)
         # jsonData is now a dictionary
         self.numDocuments = jsonData["hits"]["total"]
         print(type(jsonData["hits"]["hits"]))
+        # print("printing the json Data")
+        # count=0
+        # for i in jsonData["hits"]["hits"]:
+        #     print("----------------------count:"+str(count)+"-----------------------")
+        #     count+=1
+        #     print(jsonData[i])
         return jsonData["hits"]["hits"]
 
 # DEBUG: Do not include main in release

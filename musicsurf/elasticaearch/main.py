@@ -1,6 +1,6 @@
 # imports
 import json
-from ESAPICall import IndexGeneration, IndexHandle
+from ESAPIEndpoint.ESAPICall import IndexGeneration, IndexHandle
 
 index = IndexGeneration('musicindex', 'music')
 if not index.isESRunning():
@@ -13,11 +13,12 @@ index.createIndex()
 file = open("id3data.json")
 docs = json.load(file)
 index.postDocument(docs)
-
-# Testing with "Dream" as query in lyrics
-handle = IndexHandle('musicindex', 'music', 'Dream', {
+handle = IndexHandle('musicindex', 'music', 'Imagine', {
                      "title": 0, "artist": 0, "lyrics": 1})
 print("printing results")
+count=0
 for i in handle:
+    print("count -------------------"+str(count)+"--------------------------")
+    count+=1
     print("---------------------------------------------------------------")
     print(json.dumps(i))
