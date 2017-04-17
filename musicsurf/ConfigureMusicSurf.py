@@ -53,15 +53,26 @@ class PreProcessing:
     def startES(self):
         # Attempts starting Elastic Search server
         dir = os.getcwd()
-        if os.chdir(dir + '\\elasticsearch-5.2.2\\bin') == 1:
-            # this means Non Zero Exit Code and hence the directory was not
-            # found
-            print(colored(
-                "Pre-requisites not met: Could not find elasticsearch in the current working directory", "red"))
+        try:
+            os.chdir(dir + '\\elasticsearch-5.2.2\\bin')
+        except Exception:
+            try:
+                os.chdir(dir + '/elasticsearch-5.2.2/bin')
+            except Exception:
+                # this means Non Zero Exit Code and hence the directory was not
+                # found
+                print(colored(
+                    "Pre-requisites not met: Could not find elasticsearch in the current working directory", "red"))
         if os.name == 'nt':
             # system is windows
             print("starting ElasticSearch...")
             os.system('elasticsearch')
-        else:
+       # else:
+            # need root priviledge to run ElasticSearch server
+            # euid = 0
+            # while euid == 0:
+            #     euid = os.geteuid()
+            # args = ['sudo', sys.executable] + sys.argv + [os.environ]
+            # os.execlpe('sudo', *args)
             # system is anything but windows, assuming linux
-            os.system('./elasticsearch')
+            # os.system('./elasticsearch')
