@@ -10,8 +10,8 @@ OUTPUT: raw results in JSON form.
 from flask import Flask, render_template, request, flash
 from forms import QueryForm
 from config import INDEX, PORT, HOST, SECRET_KEY
-from elasticsearch import Elasticsearch
 import json
+from elasticsearch.ESAPICall import IndexHandle
 
 # from wtforms.validators import DataRequired
 
@@ -22,10 +22,6 @@ app = Flask(__name__)
 # secret key for preventing CSRF
 
 app.secret_key = SECRET_KEY
-
-# Initializing elastic search API
-
-es = Elasticsearch()
 
 # create API request and send to elastic search server
 # return search results in JSON form
@@ -59,12 +55,15 @@ def makeFiltersList(form):
     # {title:"xyz", "author": "xyz", lyrics:"xyz"}
 
     filterDict = {}
+    filterDict['title'] = 0
+    filterDict['artist'] = 0
+    filterDict['lyrics'] = 0
     if form.title.data:
-        filterDict['title'] = form.search_key.data
+        filterDict['title'] = 1
     if form.author.data:
-        filterDict['author'] = form.search_key.data
+        filterDict['artist'] = 1
     if form.lyrics.data:
-        filterDict['lyrics'] = form.search_key.data
+        filterDict['lyrics'] = 1
     return filterDict
 
 
@@ -78,12 +77,15 @@ def main():
         else:
             filterDict = makeFiltersList(form)
             print(filterDict)
-            results = apiCall(form.search_key.data, filterDict)
+            results = IndexHandle('musicindex', 'music', form.search_key.data, filterDict)
             return render_template('index.html', form=form,
-                                   results=json.dumps(results, indent=4))
+                                   results=results.results)
 
     elif request.method == 'GET':
         return render_template('index.html', form=form)
+
+    # handle = IndexHandle('musicindex', 'music', 'Imagine', {
+    #                  "title": 0, "artist": 0, "lyrics": 1})
 
 if __name__ == '__main__':
     app.debug = True

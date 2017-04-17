@@ -9,7 +9,7 @@ import os
 import requests
 import json
 from termcolor import colored
-
+from collections import OrderedDict
 
 class IndexGeneration:
     """
@@ -174,6 +174,8 @@ class IndexHandle:
         # requests module comes with response.json() method that works with response instances and can be used to convert the
         # whole response in json if possible
         jsonData = r.json()
+        jsonDump = json.dumps(jsonData, indent=4, sort_keys=True)
+        print(jsonDump)
         # print("printing the json Data")
         # print(jsonData)
         # jsonData is now a dictionary
@@ -185,7 +187,8 @@ class IndexHandle:
         #     print("----------------------count:"+str(count)+"-----------------------")
         #     count+=1
         #     print(jsonData[i])
-        return jsonData["hits"]["hits"]
+        # d_ascending = OrderedDict(sorted(jsonData.items(), key=lambda kv: kv[1][1]['_score']))
+        return jsonDump
 
 # DEBUG: Do not include main in release
 # def main():
