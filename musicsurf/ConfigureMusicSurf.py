@@ -1,5 +1,4 @@
 import os
-# installs all dependencies
 
 
 class PreProcessing:
@@ -11,7 +10,6 @@ class PreProcessing:
     - requests (for making API calls to ES server)
     - termcolor (for colored output on the terminal)
     - wget (for downloading files from internet)
-    - httplib2
     """
 
     def __init__(self):
@@ -45,11 +43,19 @@ class PreProcessing:
         except Exception as ex:
             print("could not extract from the zip file error: " + str(ex))
 
+    def deletezipES(self):
+        try:
+            path = os.path.abspath(self.zipFileName)
+            os.remove(path)
+        except Exception as ex:
+            print("Error occurred, could not delete zip" + str(ex))
+
     def startES(self):
         # Attempts starting Elastic Search server
         dir = os.getcwd()
         if os.chdir(dir + '\\elasticsearch-5.2.2\\bin') == 1:
-            # this means NZEC and hence the directory was not found
+            # this means Non Zero Exit Code and hence the directory was not
+            # found
             print(colored(
                 "Pre-requisites not met: Could not find elasticsearch in the current working directory", "red"))
         if os.name == 'nt':
@@ -59,18 +65,3 @@ class PreProcessing:
         else:
             # system is anything but windows, assuming linux
             os.system('./elasticsearch')
-
-
-# DEBUG: Do not add in release version:
-# def main():
-#     p=PreProcessing()
-#     # p.downloadES()
-#     p.unzipES()
-#     p.startES()
-#     if p.isESRunning():
-#         print("running")
-#     else:
-#         print("not running")
-
-# if __name__=="__main__":
-#     main()
