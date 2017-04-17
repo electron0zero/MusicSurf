@@ -99,3 +99,6 @@ ENV/
 
 # elasticsearch folder
 elasticsearch-*
+
+# kibana folders
+kibana-*

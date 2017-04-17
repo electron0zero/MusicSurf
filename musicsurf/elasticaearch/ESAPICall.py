@@ -116,21 +116,21 @@ class IndexHandle:
         # self.results is a list of all documents returned
         self.results = self.search()
 
-    def __iter__(self):
-        self.n = 0
-        # self.results=self.search()
-        print("num of documents:"+str(self.numDocuments))
-        return self
+    # def __iter__(self):
+    #     self.n = 0
+    #     # self.results=self.search()
+    #     print("num of documents:"+str(self.numDocuments))
+    #     return self
 
-    def __next__(self):
-        # print("")
-        if self.numDocuments>10:
-            self.numDocuments=10
-        if self.n < self.numDocuments:
-            self.n += 1
-            return self.results[self.n - 1]
-        else:
-            raise StopIteration
+    # def __next__(self):
+    #     # print("")
+    #     if self.numDocuments>10:
+    #         self.numDocuments=10
+    #     if self.n < self.numDocuments:
+    #         self.n += 1
+    #         return self.results[self.n - 1]
+    #     else:
+    #         raise StopIteration
 
     def search(self):
         """
