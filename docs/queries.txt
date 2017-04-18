@@ -10,3 +10,8 @@ to highlight the change in  score
 
 search in multiple tags
     "smoke the imagine dragons in the fall" without filters
+
+search songs by features
+    "single"
+    "radio"
+    "single radio"
