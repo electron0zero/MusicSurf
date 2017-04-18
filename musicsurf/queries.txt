@@ -1,0 +1,9 @@
+nlp:
+    "is smoke so hopeless"
+
+"imagine" with filter "author"
+"smoke" with filter "title"
+
+to highlight the change in  score
+    "so ease it off" without filters
+    "so ease it off" with filter "lyrics"
