@@ -1,6 +1,7 @@
 import os
 import wget
 
+
 class PreProcessing:
     """
     Dependencies:
@@ -26,7 +27,6 @@ class PreProcessing:
         # downloads ElasticSearch from official website
         # downloaded in the current working directory
         try:
-            
             print("downloading ElasticSearch...Hang Tight")
             self.zipFileName = wget.download(self.ESURL)
         except Exception as ex:
