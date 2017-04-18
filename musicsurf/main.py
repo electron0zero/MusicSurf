@@ -73,7 +73,7 @@ def main():
     if request.method == 'POST':
         if form.validate() is False:
             flash('required')
-            return render_template('index.html', form=form)
+            return render_template('main.html', form=form)
         else:
             filterDict = makeFiltersList(form)
             print(filterDict)
@@ -82,7 +82,7 @@ def main():
                                    results=results.results)
 
     elif request.method == 'GET':
-        return render_template('index.html', form=form)
+        return render_template('main.html', form=form)
 
     # handle = IndexHandle('musicindex', 'music', 'Imagine', {
     #                  "title": 0, "artist": 0, "lyrics": 1})

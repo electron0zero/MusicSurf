@@ -1,0 +1,42 @@
+{% extends 'layout.html' %}
+{% block title %}
+    MusicSurf
+{% endblock %}
+{% block body %}
+    <div class="mdl-grid">
+    
+    <!-- Form sectoin -->
+      <div class="mdl-cell mdl-cell--4-col"></div>
+      <div class="mdl-cell--4-col">
+          <form action = "http://127.0.0.1:2000/" class="form-pos" method = post>
+          <h2>MusicSurf</h2>
+              {{ form.hidden_tag() }}
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                {% for field in form %}
+                    {% if field.type is equalto 'TextField' %}
+                        {{ field.label(class_="mdl-textfield__label") }}
+                        {{ field(class_="mdl-textfield__input") }}
+                    {% elif field.type == 'SubmitField' %}
+                    {% endif %}
+                    <!-- {{ field.label }}{{ field }} -->
+                {% endfor %}
+              </div>
+               <br/>
+              <p>Filters</p>
+              {% for field in form %}
+                  {% if field.type == 'BooleanField' %}
+                    <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="{{ field.name }}">
+                        {{ field(class_="mdl-checkbox__input") }}
+                        <span class="mdl-checkbox__label">{{ field.name }}</span>
+                    </label>
+                  {% endif %}
+              {% endfor %}
+          </form>
+      </div>
+      <div class="mdl-cell mdl-cell--4-col"></div>
+
+     
+
+    </div>
+
+{% endblock %}
