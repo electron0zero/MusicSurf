@@ -7,7 +7,8 @@
     
     <!-- Form sectoin -->
       <div class="mdl-cell mdl-cell--4-col">
-          <form action = "http://127.0.0.1:2000/" class="form-pos" method = post>
+          <div class = "form-pos">
+          <form action = "http://127.0.0.1:2000/" method = post>
           <h2>MusicSurf</h2>
               {{ form.hidden_tag() }}
               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -31,42 +32,16 @@
                   {% endif %}
               {% endfor %}
 
+
+          </form>
             <!--Download results as Playlist-->
             {% if results %}
                 <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" style="margin:10px;" id="download">Download results as Playlist</button>
                 <!--Proxy Tag for playlist data-->
                 <meta id="my_playlist_data" data-playlist="{{ playlist }}">
-                <script>
-                    // Source: http://thiscouldbebetter.wordpress.com/2012/12/18/loading-editing-and-saving-a-text-file-in-html5-using-javascrip/
-                    $("#download").on("click", function() {
-                        //console.log("download");
-                        function destroyClickedElement(event) {
-                        document.body.removeChild(event.target);
-                        }
-                        var $download = document.createElement("a");
-                        var textToWrite = $('#my_playlist_data').data("playlist");
-                        console.log(textToWrite)
-                        var textFileAsBlob = new Blob([textToWrite], {type: "text/plain"});
-                        var fileNameToSaveAs = "playlist.m3u";
-                        $download.download = fileNameToSaveAs;
-                        if (typeof window.URL === "function") {
-                        // Chrome
-                        $download.href = window.URL.createObjectURL(textFileAsBlob);
-                        } else {
-                        // Firefox
-                        $download.href = window.URL.createObjectURL(textFileAsBlob);
-                        }
-                        $download.onclick = destroyClickedElement;
-                        $download.style.display = "none";
-                        document.body.appendChild($download);
-                        $download.click();
-                    });
-                </script>
+
             {% endif %}
-
-          </form>
-
-          
+          </div>
       </div>
 
       <!-- results section -->
@@ -95,12 +70,12 @@
                                 <b>Year:</b> {{ i['_source']['year'] }}<br>
                                 {% if  i['_source']['lyrics'] != '' %}
                                     {{ i['_source']['lyrics'][0:200] }}
-                                    <div id="lyricsFull_{{ i['_id'] }}" style="display:none">
+                                    <div id="lyricsFull">
                                         <!--show first few lines of lyrics-->
                                         {{ i['_source']['lyrics'][200:] }}
                                     </div>
                                     <!--INCOMPLETE - show full lyrics by expending the card-->
-                                    <a id="lyricsFullButton_{{ i['_id'] }}" onclick=""> view lyrics</a>
+                                    <!--<a id="lyricsFullButton_{{ i['_id'] }}" onclick="$('div#lyricsFull').slideToggle()"> view lyrics</a>-->
                                 {% endif %}
 
                             </div>
@@ -119,4 +94,70 @@
 
     </div>
 
+    <!-- ****** JavaScript ******** -->
+    <script>
+
+    $(document).ready(function() {
+        // Configure/customize these variables.
+        var showChar = 100;  // How many characters are shown by default
+        var ellipsestext = "...";
+        var moretext = "Show more >";
+        var lesstext = "Show less";
+        
+
+        $("#lyricsFull").each(function() {
+            var content = $(this).html();
+    
+            if(content.length > showChar) {
+    
+                var c = content.substr(0, showChar);
+                var h = content.substr(showChar, content.length - showChar);
+    
+                var html = c + '<span class="moreellipses">' + ellipsestext+ '&nbsp;</span><span class="morecontent"><span>' + h + '</span>&nbsp;&nbsp;<a href="" class="morelink">' + moretext + '</a></span>';
+    
+                $(this).html(html);
+            }
+    
+        });
+    
+        $("#lyricsFull").click(function(){
+            if($(this).hasClass("less")) {
+                $(this).removeClass("less");
+                $(this).html(moretext);
+            } else {
+                $(this).addClass("less");
+                $(this).html(lesstext);
+            }
+            $(this).parent().prev().toggle();
+            $(this).prev().toggle();
+            return false;
+        });
+    });
+</script>
+<script>
+        // Source: http://thiscouldbebetter.wordpress.com/2012/12/18/loading-editing-and-saving-a-text-file-in-html5-using-javascrip/
+        $("#download").on("click", function() {
+            //console.log("download");
+            function destroyClickedElement(event) {
+            document.body.removeChild(event.target);
+            }
+            var $download = document.createElement("a");
+            var textToWrite = $('#my_playlist_data').data("playlist");
+            console.log(textToWrite)
+            var textFileAsBlob = new Blob([textToWrite], {type: "text/plain"});
+            var fileNameToSaveAs = "playlist.m3u";
+            $download.download = fileNameToSaveAs;
+            if (typeof window.URL === "function") {
+            // Chrome
+            $download.href = window.URL.createObjectURL(textFileAsBlob);
+            } else {
+            // Firefox
+            $download.href = window.URL.createObjectURL(textFileAsBlob);
+            }
+            $download.onclick = destroyClickedElement;
+            $download.style.display = "none";
+            document.body.appendChild($download);
+            $download.click();
+        });
+    </script>
 {% endblock %}
