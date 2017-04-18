@@ -35,7 +35,7 @@
 
           </form>
             <!--Download results as Playlist-->
-            {% if results %}
+            {% if results['hits']['total'] > 0 %}
                 <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" style="margin:10px;" id="download">Download results as Playlist</button>
                 <!--Proxy Tag for playlist data-->
                 <meta id="my_playlist_data" data-playlist="{{ playlist }}">
