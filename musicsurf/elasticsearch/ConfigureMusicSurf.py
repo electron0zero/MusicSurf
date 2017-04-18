@@ -1,50 +1,50 @@
 import os
 import wget
+import config
 
 
-class PreProcessing:
+class SetupElasticsearch:
     """
-    Dependencies:
-    - ElasticSearch to be downloaded from url: https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.2.2.zip 
-    unzipped and installed
-    python modules include:
-    - requests (for making API calls to ES server)
-    - termcolor (for colored output on the terminal)
-    - wget (for downloading files from internet)
+    makes the setting up Elasticsearch somewhat easy
+    (only for windows user as of now)
+    see more: https://www.elastic.co/downloads/elasticsearch
     """
 
     def __init__(self):
-        # install all dependencies
-        try:
+        # OS == Windows
+        if os.name == 'nt':
             # refers to the elasticSearch Download URL
-            self.ESURL = 'https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.2.2.zip'
-            self.zipFileName = ""
-            self.directory = ""
-        except Exception as ex:
-            print("Error occurred in initialization: " + str(ex))
+            self.ES_URL = config.WIN_ES_DOWNLOAD_URL
+        else:
+            print("Not Supported, please setup Elasticsearch manually, \
+            see docs for more info")
+            exit
+        self.zipFileName = ""
+        self.directory = ""
 
     def downloadES(self):
         # downloads ElasticSearch from official website
         # downloaded in the current working directory
         try:
-            print("downloading ElasticSearch...Hang Tight")
-            self.zipFileName = wget.download(self.ESURL)
+            print("downloading Elasticsearch...Hang Tight")
+            self.zipFileName = wget.download(self.ES_URL)
         except Exception as ex:
-            print("Error in downloadES: " + str(ex))
+            print("Error occurred, can not download Elasticsearch: " + str(ex))
 
     def unzipES(self):
         # unzip and store in the current working directory
         try:
             import zipfile
-            print("Unzipping ElasticSearch...")
+            print("\nUnzipping ElasticSearch...")
             zip = zipfile.ZipFile(self.zipFileName)
             # zip=zipfile.ZipFile(self.zipFileName)
             zip.extractall()
         except Exception as ex:
-            print("could not extract from the zip file error: " + str(ex))
+            print("\nError occurred, Could not extract zip file: " + str(ex))
 
     def deletezipES(self):
         try:
+            print("Removing zip file...")
             path = os.path.abspath(self.zipFileName)
             os.remove(path)
         except Exception as ex:
@@ -53,26 +53,12 @@ class PreProcessing:
     def startES(self):
         # Attempts starting Elastic Search server
         dir = os.getcwd()
-        try:
-            os.chdir(dir + '\\elasticsearch-5.2.2\\bin')
-        except Exception:
-            try:
-                os.chdir(dir + '/elasticsearch-5.2.2/bin')
-            except Exception:
-                # this means Non Zero Exit Code and hence the directory was not
-                # found
-                print(colored(
-                    "Pre-requisites not met: Could not find elasticsearch in the current working directory", "red"))
+        # OS == Windows
         if os.name == 'nt':
-            # system is windows
-            print("starting ElasticSearch...")
-            os.system('elasticsearch')
-       # else:
-            # need root priviledge to run ElasticSearch server
-            # euid = 0
-            # while euid == 0:
-            #     euid = os.geteuid()
-            # args = ['sudo', sys.executable] + sys.argv + [os.environ]
-            # os.execlpe('sudo', *args)
-            # system is anything but windows, assuming linux
-            # os.system('./elasticsearch')
+            try:
+                os.chdir(dir + config.WIN_ES_DIR)
+                print("Starting Elasticsearch...")
+                os.system(config.WIN_ES_START_COMMAND)
+            except Exception:
+                print(colored("Pre-requisites not met: Could not find Elasticsearch \
+                in the current working directory", "red"))
