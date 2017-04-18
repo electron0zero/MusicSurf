@@ -67,6 +67,16 @@ def makeFiltersList(form):
     return filterDict
 
 
+def build_playlist(results):
+    results = results['hits']['hits']
+    # app.logger.info("items len" + str(len(results)))
+    playlist = ""
+    for item in results:
+        playlist = playlist + item['_source']['path'] + "\n"
+
+    return playlist
+
+
 @app.route('/', methods=['GET', 'POST'])
 def main():
     form = QueryForm()
@@ -78,8 +88,11 @@ def main():
             filterDict = makeFiltersList(form)
             print(filterDict)
             results = IndexHandle('musicindex', 'music', form.search_key.data, filterDict)
+
+            playlist = build_playlist(results.results)
+            # app.logger.info(playlist)
             return render_template('index.html', form=form,
-                                   results=results.results)
+                                   results=results.results, playlist=playlist)
 
     elif request.method == 'GET':
         return render_template('main.html', form=form)

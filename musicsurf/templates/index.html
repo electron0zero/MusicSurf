@@ -30,13 +30,49 @@
                     </label>
                   {% endif %}
               {% endfor %}
+
+            <!--Download results as Playlist-->
+            {% if results %}
+                <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" style="margin:10px;" id="download">Download results as Playlist</button>
+                <!--Proxy Tag for playlist data-->
+                <meta id="my_playlist_data" data-playlist="{{ playlist }}">
+                <script>
+                    // Source: http://thiscouldbebetter.wordpress.com/2012/12/18/loading-editing-and-saving-a-text-file-in-html5-using-javascrip/
+                    $("#download").on("click", function() {
+                        //console.log("download");
+                        function destroyClickedElement(event) {
+                        document.body.removeChild(event.target);
+                        }
+                        var $download = document.createElement("a");
+                        var textToWrite = $('#my_playlist_data').data("playlist");
+                        console.log(textToWrite)
+                        var textFileAsBlob = new Blob([textToWrite], {type: "text/plain"});
+                        var fileNameToSaveAs = "playlist.m3u";
+                        $download.download = fileNameToSaveAs;
+                        if (typeof window.URL === "function") {
+                        // Chrome
+                        $download.href = window.URL.createObjectURL(textFileAsBlob);
+                        } else {
+                        // Firefox
+                        $download.href = window.URL.createObjectURL(textFileAsBlob);
+                        }
+                        $download.onclick = destroyClickedElement;
+                        $download.style.display = "none";
+                        document.body.appendChild($download);
+                        $download.click();
+                    });
+                </script>
+            {% endif %}
+
           </form>
+
+          
       </div>
 
       <!-- results section -->
       <div class="mdl-cell mdl-cell--8-col">
           <div class="results">
-
+            <!--Results cards-->
             <!--check if results are returned else nothing will happen-->
             {% if results %}
                 <!-- check if given item is found or not -->
