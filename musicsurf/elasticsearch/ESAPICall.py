@@ -141,7 +141,7 @@ class IndexHandle:
         """
         The search API to be followed here is the one given under tests/elasticSearchSearchAPI.md
         """
-        jsonData = open("searchAPIStruct.json")
+        jsonData = open("elasticsearch/searchAPIStruct.json")
         data = json.load(jsonData)
         # data now is of type dictionary
         innerList = data["query"]["bool"]["should"]
