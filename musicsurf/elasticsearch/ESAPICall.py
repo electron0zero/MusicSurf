@@ -1,15 +1,17 @@
 """
 ESAPICall or Elastic Search API Call will handle all elastic search API calls:
-- Creating index and confiuring its settings and mappings
+- Creating index and configuring its settings and mappings
 - Posting documents
-- Tuning filters 
+- Tuning filters
 - Searching queries
 """
 import os
 import requests
 import json
+import config
 from termcolor import colored
 from collections import OrderedDict
+
 
 class IndexGeneration:
     """
@@ -26,7 +28,8 @@ class IndexGeneration:
         """
         returns id es is running or not
         """
-        path = 'http://localhost:9200'
+        path = config.ES_SERVER_URL
+        print(path)
         command = 'curl ' + path
         response = os.system(command)
         if response == 0:
@@ -39,11 +42,11 @@ class IndexGeneration:
 
     def createIndex(self):
         """
-        generates the index for storing metadata of songs in the local music collection with the following settings:
+        generates the index for storing metadata of songs in the local music
+        collection with the following settings:
         number_of_shards: 5
         number_of_replicas: 1 which is also the default setting
-        """
-        """
+
         Force Mappings
         Mapping helps optimize search among various fields
         Mapping for all fields will be generated as follows:
@@ -59,10 +62,10 @@ class IndexGeneration:
         try:
             upperCaseLetters = [c for c in self.indexName if c.isupper()]
             if len(upperCaseLetters) == 0:
-                url = "http://localhost:9200/%s" % (self.indexName)
+                url = config.ES_SERVER_URL + "/%s" % (self.indexName)
 
                 # read json from file
-                jsonData = open("indexConfig.json")
+                jsonData = open(config.ES_INDEX_CONFIG_PATH)
                 settings = json.load(jsonData)
                 settings = json.dumps(settings)
                 data = settings
@@ -75,6 +78,7 @@ class IndexGeneration:
 
     def postDocument(self, documents):
         """
+        NOTE: Create Index by calling createIndex before posting documents
         post documents in defined index
         documents is a list of dictionaries defining documents
         """
@@ -85,23 +89,24 @@ class IndexGeneration:
                 raise ValueError('No values found in documents')
 
             for document in documents:
-                url = "http://localhost:9200/%s/%s/%d" % (
-                    self.indexName, self.type, numDocument)
+                url = config.ES_SERVER_URL + "/%s/%s/%d" % (self.indexName, self.type, numDocument)
                 data = json.dumps(document)
                 r = requests.post(url, data=data)
                 numDocument += 1
                 response = r.json()
                 if "error" in response:
                     raise Exception(r.text)
-            print("no of documents:" + str(numDocument))
+            print("no of documents posted:" + str(numDocument))
         except Exception as ex:
-            print("----------------Exception occured--------------")
+            print("----------------Exception occurred--------------")
             print(colored(str(ex), 'red'))
 
 
 class IndexHandle:
     """
-    IndexHandle is an iterator class and returns iterator instances on query results from Elastic Search
+    IndexHandle is a class and to query results from
+    Elasticsearch instance, query result JSON can be obtained on
+    results of instance variable
     """
 
     def __init__(self, indexName, type, query, filter):
@@ -116,32 +121,15 @@ class IndexHandle:
         # self.results is a list of all documents returned
         self.results = self.search()
 
-    # def __iter__(self):
-    #     self.n = 0
-    #     # self.results=self.search()
-    #     print("num of documents:"+str(self.numDocuments))
-    #     return self
-
-    # def __next__(self):
-    #     # print("")
-    #     if self.numDocuments>10:
-    #         self.numDocuments=10
-    #     if self.n < self.numDocuments:
-    #         self.n += 1
-    #         return self.results[self.n - 1]
-    #     else:
-    #         raise StopIteration
-
     def search(self):
         """
-        search query based on options in the filters, Filters provided are title, author and lyrics
+        search query based on options in the filters, Filters provided are 
+        title, author and lyrics
         updates number of documents (self.numDocuments)
         Returns the whole document as a dictionary
         """
-        """
-        The search API to be followed here is the one given under tests/elasticSearchSearchAPI.md
-        """
-        jsonData = open("elasticsearch/searchAPIStruct.json")
+
+        jsonData = open(config.ES_SEARCH_API_STRUCTURE_CONFIG_PATH)
         data = json.load(jsonData)
         # data now is of type dictionary
         innerList = data["query"]["bool"]["should"]
@@ -162,7 +150,7 @@ class IndexHandle:
         # so that constructs the data for the search
         data["query"]["bool"]["should"] = innerList
         # so the data itself is now the data we want
-        url = "http://localhost:9200/%s/%s" % (self.indexName, '_search')
+        url = config.ES_SERVER_URL + "/%s/%s" % (self.indexName, '_search')
         r = requests.get(url, data=json.dumps(data))
         return self.parseResponse(r)
 
@@ -171,14 +159,10 @@ class IndexHandle:
         Parses the response of elasticsearch search
         r is the response object
         """
-        # requests module comes with response.json() method that works with response instances and can be used to convert the
+        # requests module comes with response.json() method that works with
+        # response instances and can be used to convert the
         # whole response in json if possible
         jsonData = r.json()
-        jsonDump = json.dumps(jsonData, indent=4, sort_keys=True)
-        print(jsonDump)
-        # print("printing the json Data")
-        # print(jsonData)
-        # jsonData is now a dictionary
         self.numDocuments = jsonData["hits"]["total"]
         print(type(jsonData["hits"]["hits"]))
         # print("printing the json Data")
@@ -189,9 +173,3 @@ class IndexHandle:
         #     print(jsonData[i])
         # d_ascending = OrderedDict(sorted(jsonData.items(), key=lambda kv: kv[1][1]['_score']))
         return jsonData
-
-# DEBUG: Do not include main in release
-# def main():
-
-
-# DEBUG: Not to be included in release

@@ -7,3 +7,6 @@ nlp:
 to highlight the change in  score
     "so ease it off" without filters
     "so ease it off" with filter "lyrics"
+
+search in multiple tags
+    "smoke the imagine dragons in the fall" without filters

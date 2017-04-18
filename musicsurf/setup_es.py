@@ -1,9 +1,10 @@
-from ConfigureMusicSurf import PreProcessing
+from elasticsearch.ConfigureMusicSurf import PreProcessing
 import os
+
 
 def main():
     if os.name != 'nt':
-        print("Because you are a non Windows user, you need to manually setup elastic search. Go to https://www.elastic.co/downloads/elasticsearch")
+        print("Because you are a non Windows user, you need to manually setup elasticsearch. Go to https://www.elastic.co/downloads/elasticsearch")
         exit
     else:
         p = PreProcessing()

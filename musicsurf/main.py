@@ -9,7 +9,7 @@ OUTPUT: raw results in JSON form.
 
 from flask import Flask, render_template, request, flash
 from forms import QueryForm
-from config import INDEX, PORT, HOST, SECRET_KEY
+import config
 import json
 from elasticsearch.ESAPICall import IndexHandle
 
@@ -21,7 +21,7 @@ app = Flask(__name__)
 
 # secret key for preventing CSRF
 
-app.secret_key = SECRET_KEY
+app.secret_key = config.SECRET_KEY
 
 # create API request and send to elastic search server
 # return search results in JSON form
@@ -38,7 +38,7 @@ def apiCall(data, filterDict):
         payload = \
             '{"query": {"bool" : {"must" : {"query_string" : {"query" : "\
         ' + data + '"}}}}}'
-    res = es.search(index=INDEX, body=payload)
+    res = es.search(index=config.ES_INDEX_NAME, body=payload)
     print('Got %d Hits:' % res['hits']['total'])
     print(json.dumps(res, indent=4))
     return res
@@ -53,7 +53,6 @@ def makeFiltersList(form):
 
     # filterDict contains the values for filters used
     # {title:"xyz", "author": "xyz", lyrics:"xyz"}
-
     filterDict = {}
     filterDict['title'] = 0
     filterDict['artist'] = 0
@@ -97,9 +96,7 @@ def main():
     elif request.method == 'GET':
         return render_template('main.html', form=form)
 
-    # handle = IndexHandle('musicindex', 'music', 'Imagine', {
-    #                  "title": 0, "artist": 0, "lyrics": 1})
 
 if __name__ == '__main__':
     app.debug = True
-    app.run(host=HOST, port=PORT)
+    app.run(host=config.WEB_SERVER_HOST, port=config.WEB_SERVER_PORT)
