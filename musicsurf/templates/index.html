@@ -5,7 +5,7 @@
 {% block body %}
     <div class="mdl-grid">
       <div class="mdl-cell mdl-cell--4-col">
-          <form action = "http://127.0.0.1:2000/" method = post>
+          <form action = "http://127.0.0.1:2000/" class="form-pos" method = post>
               {{ form.hidden_tag() }}
               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                 {% for field in form %}
@@ -53,7 +53,25 @@
       <div class="mdl-cell mdl-cell--8-col">
           <div class="results">
             {% if results %}
-                {{ results }}
+                {% for i in results['hits']['hits'] %}
+                    <div class="mdl-card mdl-shadow--2dp" style="width: 80%;">
+                        <div class="mdl-card__title">
+                            <h2 class="mdl-card__title-text">{{ i['_source']['title'] }}</h2>
+                        </div>
+                        <div class="mdl-card__supporting-text">
+                            <b>Album:</b> {{ i['_source']['album'] }}<br>
+                            <b>Artist:</b> {{ i['_source']['artist'] }}<br>
+                            <b>Year:</b> {{ i['_source']['year'] }}<br>
+                            {{ i['_source']['lyrics'][0:200] }}...
+
+                        </div>
+                        <div class="mdl-card__actions mdl-card--border">
+                            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="{{ i['_source']['path'] }}">
+                            Play
+                            </a>
+                        </div>
+                    </div><br>
+                {% endfor %}
             {% endif %}
         </div>
       </div>

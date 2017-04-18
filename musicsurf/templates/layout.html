@@ -10,6 +10,22 @@
         <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
         <!-- Material Design icon font -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        
+        <!-- change form position -->
+        <style>
+            .form-pos{
+                        position: static;
+                    }
+            @media (min-width: 1000px){
+                .form-pos{
+                    position: fixed;
+                }
+            @media (max-width: 480px){
+                .form-pos{
+                    position: static;
+                }
+            }
+        </style>
     </head>
     <body>
         {% block body %}

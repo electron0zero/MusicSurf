@@ -188,7 +188,7 @@ class IndexHandle:
         #     count+=1
         #     print(jsonData[i])
         # d_ascending = OrderedDict(sorted(jsonData.items(), key=lambda kv: kv[1][1]['_score']))
-        return jsonDump
+        return jsonData
 
 # DEBUG: Do not include main in release
 # def main():
