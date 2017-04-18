@@ -36,12 +36,21 @@
           </form>
             <!--Download results as Playlist-->
             {% if results['hits']['total'] > 0 %}
-                <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" style="margin:10px;" id="download">Download results as Playlist</button>
+                <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" style="margin:10px 0px 10px 0px;" id="download">Download results as Playlist</button>
                 <!--Proxy Tag for playlist data-->
                 <meta id="my_playlist_data" data-playlist="{{ playlist }}">
 
             {% endif %}
+
+            <div style="border: solid grey 1px; width:90%; margin-top:2rem; padding: 5px;">
+
+                Total results found: {{ results['hits']['total'] }} <br> 
+                time taken: {{ results['took'] }} ms <br>
+                Maximum score: {{ results['hits']['max_score'] }}
+
+            </div>
           </div>
+
       </div>
 
       <!-- results section -->
@@ -56,37 +65,40 @@
                 {% endif %}
                 <!--else render results-->
                 {% if results['hits']['total'] > 0 %}
-                    <p>Total results found: {{ results['hits']['total'] }}</p>
+                    
+                    
 
                     <!--iterate through dictionary to render each result in mdl-card-->
                     {% for i in results['hits']['hits'] %}
-                        <div class="mdl-card mdl-shadow--2dp" style="width: 80%;">
+                        <div class="mdl-card mdl-shadow--2dp" style="width: 80%; min-height: 100px">
                             <div class="mdl-card__title">
-                                <h2 class="mdl-card__title-text">{{ i['_source']['title'] }}</h2>
+                                <h2 class="mdl-card__title-text" style="margin-bottom: -2rem;">{{ i['_source']['title'] }}</h2>
                             </div>
-                            <div class="mdl-card__supporting-text">
+                            <div class="mdl-card__supporting-text" style="color: rgba(0, 0, 0, 0.8);">
+                                <!--<b style="float: right; color: grey;">Score:</b> {{ i['_source']['_score'] }}<br>-->
                                 <b>Album:</b> {{ i['_source']['album'] }}<br>
                                 <b>Artist:</b> {{ i['_source']['artist'] }}<br>
                                 <b>Year:</b> {{ i['_source']['year'] }}<br>
                                 {% if  i['_source']['lyrics'] != '' %}
-                                    {{ i['_source']['lyrics'][0:200] }}
-                                    <div id="lyricsFull">
-                                        <!--show first few lines of lyrics-->
-                                        {{ i['_source']['lyrics'][200:] }}
+                                    <div id="lyricsFull{{ i['_id'] }}" style="display: none; font-size: 0.9rem; max-height: 30rem; overflow-y: scroll; margin-top: 10px;">
+                                        <pre>{{ i['_source']['lyrics'] }}</pre>
                                     </div>
-                                    <!--INCOMPLETE - show full lyrics by expending the card-->
-                                    <!--<a id="lyricsFullButton_{{ i['_id'] }}" onclick="$('div#lyricsFull').slideToggle()"> view lyrics</a>-->
                                 {% endif %}
 
                             </div>
                             <!--play song button. need to link it to music player-->
+                            {% if  i['_source']['lyrics'] != '' %}
                             <div class="mdl-card__actions mdl-card--border">
                                 <!--<a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="{{ i['_source']['path'] }}">
                                 Play
                                 </a>-->
-                                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="#">
-                                View Lyrics
+                                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect lyricsButton" onclick="showLyrics({{ i }})">
+                                Lyrics
                                 </a>
+                            </div>
+                            {% endif %}
+                            <div class="mdl-card__menu" style="color: grey"> 
+                                score: {{ i['_score'] }}
                             </div>
                         </div><br>
                     {% endfor %}
@@ -99,45 +111,11 @@
 
     <!-- ****** JavaScript ******** -->
     <script>
-
-    $(document).ready(function() {
-        // Configure/customize these variables.
-        var showChar = 100;  // How many characters are shown by default
-        var ellipsestext = "...";
-        var moretext = "Show more >";
-        var lesstext = "Show less";
-        
-
-        $("#lyricsFull").each(function() {
-            var content = $(this).html();
-    
-            if(content.length > showChar) {
-    
-                var c = content.substr(0, showChar);
-                var h = content.substr(showChar, content.length - showChar);
-    
-                var html = c + '<span class="moreellipses">' + ellipsestext+ '&nbsp;</span><span class="morecontent"><span>' + h + '</span>&nbsp;&nbsp;<a href="" class="morelink">' + moretext + '</a></span>';
-    
-                $(this).html(html);
-            }
-    
-        });
-    
-        $("#lyricsFull").click(function(){
-            if($(this).hasClass("less")) {
-                $(this).removeClass("less");
-                $(this).html(moretext);
-            } else {
-                $(this).addClass("less");
-                $(this).html(lesstext);
-            }
-            $(this).parent().prev().toggle();
-            $(this).prev().toggle();
-            return false;
-        });
-    });
-</script>
-<script>
+    var showLyrics = function(i){
+    $("#lyricsFull"+i._id).slideToggle();
+    }
+    </script>
+    <script>
         // Source: http://thiscouldbebetter.wordpress.com/2012/12/18/loading-editing-and-saving-a-text-file-in-html5-using-javascrip/
         $("#download").on("click", function() {
             //console.log("download");
