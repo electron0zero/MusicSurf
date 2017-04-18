@@ -1,9 +1,7 @@
-# MusicSurf
-#### report
+<h1 align="center"> MusicSurf</h1>
 
-### Rajdeep Mukherjee
-### U101114FCS115
-### NIIT University
+<h4 align="center">Rajdeep Mukherjee</h4>
+<h4 align="center">NIIT University</h4>
 
 ## Idea
 
