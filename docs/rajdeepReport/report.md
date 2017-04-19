@@ -177,4 +177,6 @@ The boost parameter can be used effectively for prioritizing attributes. When an
 
 Check out my contributions to MusicSurf [here](https://github.com/electron0zero/MusicSurf)
 
+Here is a snapshot for quick reference
+
 ![Contribution graph](https://raw.githubusercontent.com/electron0zero/MusicSurf/master/docs/rajdeepReport/contributionGraph.png)
