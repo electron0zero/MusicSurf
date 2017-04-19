@@ -28,7 +28,7 @@ The project required an information retrieval system that would index all metada
 
 #### ElasticSearch (ES)
 
-ElasticSearch is one of the most popular search engines out there fully open-source and ready to be integrated with software. It is also built on a server-client architecture and uses. All communication with the elastic-search server is made with RESTful API calls. It is amazngly easy to use and integrate with software of all types. 
+ElasticSearch is one of the most popular search engines out there fully open-source and ready to be integrated with software. It is also built on a server-client architecture and uses. All communication with the elastic-search server is made with RESTful API calls. It is amazingly easy to use and integrate with software of all types. 
 
 Features of ES relevant to project
 
@@ -40,16 +40,20 @@ Features of ES relevant to project
 
 My primary contribution to the project was integrating elasticsearch with the application. 
 
-Choice of Programming language: python
+**Choice of Programming language**: python
 
 Python was chosen as the primary choice of programming langauge for the whole application development because of its familiarity with the whole team.
 
-Choices for implementation styles:
+**Choices for implementation styles**:
 
 - Using python elasticSearch client module
 - Using http request modules like requests and httplib
 
 I chose to use requests module for api calls. This would make the whole system less rigid as it allowed me to make suitable modifications in queries as per my need and also allowed me understand the request-response model of elasticsearch inside out.
+
+**API Constructs**: The basic architecture involves storing the base structure of all api constructs in json configuration files and to read and modify the files according to our need. This is a cleaner and more robust approach of design as it avoids hard coding all the constructs in the main file itself.
+
+**Results**: The results are returned after appropirate retrieval and used directly for rendering to the client template. There is no intermmediate persistence layer storing the results. This also goes to save memory as we would want the basic file structure to be polluted by unnecessary storage of files.
 
 ### Configuring ElasticSearch 
 
@@ -93,4 +97,15 @@ The very first step in the process of any information retrieval system is the in
 Steps for indexing of document:
 
 - Extract id3 tag information of all songs in the offline music collection into a json file.
-- read the json file for constructing indexing api request.
+- read the json file to construct index api request. 
+- construct index query and send the request as an API call to the elasticsearch server.
+
+Thats all, Indexing of all documents is handled easily using simply API calls.
+
+### Search
+
+After indexing of all documents search on all these documents can be performed using a search api. The maximum search results returned are 10. In case the number of documents is more than 10 at one time 10 documents will be returned by default. This can however be changed during the query step by defining parameters 'from' and 'size'. The from parameter defines the starting point of the document generation or retrieval and size defines the number of documents to be returned.
+
+The query is structured following the basic search structure according to the documentation of elasticsearch.
+ 
+
