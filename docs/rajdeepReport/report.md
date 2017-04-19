@@ -32,7 +32,7 @@ ElasticSearch is one of the most popular search engines out there fully open-sou
 
 Features of ES relevant to project
 
-- API is RESTful hence client and server sides are not tightly coupled and hence there is less regidity between client and server. All that the server needs are certain requests (as in HTTP requests like GET, POST and so on) in the form of API calls and the server sends a response based on these API calls.
+- API is RESTful hence client and server sides are not tightly coupled and hence there is less rigidity between client and server. All that the server needs are certain requests (as in HTTP requests like GET, POST and so on) in the form of API calls and the server sends a response based on these API calls.
 - Extensive documentation- For the success of any application software, the developers must have an extensive documentation so that he can easiy refer to solutions to problems that he/she cannot otherwise solve.
 - Default capability of handling natural language queries.
 
@@ -107,5 +107,74 @@ Thats all, Indexing of all documents is handled easily using simply API calls.
 After indexing of all documents search on all these documents can be performed using a search api. The maximum search results returned are 10. In case the number of documents is more than 10 at one time 10 documents will be returned by default. This can however be changed during the query step by defining parameters 'from' and 'size'. The from parameter defines the starting point of the document generation or retrieval and size defines the number of documents to be returned.
 
 The query is structured following the basic search structure according to the documentation of elasticsearch.
- 
 
+```
+"query":
+{
+    "bool":
+    {
+    "should":[
+        {
+        "match":{
+            "title":{
+                "query":"queryString",
+                "boost":1
+            }
+        }
+        },
+        {
+        "match":{
+            "artist":{
+                "query":"queryString",
+                "boost":1
+            }
+        }
+        },
+        {
+            "match":{
+                "album":{
+                    "query":"queryString",
+                    "boost":1
+                }
+            }
+        },
+        {
+            "match":{
+                "year":{
+                    "query":"queryString",
+                    "boost":1
+                }
+            }
+        },
+        {
+            "match":{
+                "lyrics":{
+                    "query":"queryString",
+                    "boost":1
+                }
+            }
+        }
+        ]
+    }
+
+    },
+    "sort" : [
+        {
+            "_score": {
+                "order": "desc"
+            }
+        }
+    ]
+```
+ 
+The **bool** parameter creates a filter with the following attributes for filter application: artist, album, year and lyrics. Note that these attributes are very much parts of the documents themselves. The **should** parameter makes sure that there is an **OR** condition being applied for the various attributes of the filter.
+
+**Prioritizing Attributes** (The boost parameter) 
+
+The boost parameter can be used effectively for prioritizing attributes. When an attribute is proritized for searching the boost property is incremented by one for that property. The direct impact of this increment is that during the search process, the corresponding attribute is given higher priority and search is first preformed in that attribute and the score is decided accordingly
+
+## Conclusion
+
+Check out my contributions to MusicSurf [here](https://github.com/electron0zero/MusicSurf)
+
+![Contribution graph]()
