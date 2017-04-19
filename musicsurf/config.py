@@ -19,6 +19,7 @@ ES_INDEX_CONFIG_PATH = "ES_INDEX_CONFIG.json"
 ES_SEARCH_API_STRUCTURE_CONFIG_PATH = "ES_SEARCH_API_STRUCTURE_CONFIG.json"
 
 # Music Related things
+# No of documents in this path: 129
 MUSIC_ROOT_PATH = r"C:\Users\Electron\Music\test_music"
 ID3_DATA_FILE = "ID3_DATA.json"
 
