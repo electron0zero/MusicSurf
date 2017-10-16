@@ -11,6 +11,16 @@ Built by [Raghav Mittal](https://github.com/raghavmittal101), [Rajdeep Mukherjee
 # Documentation
 see [docs](docs) folder
 
+## Screenshots
+
+<p align="center">
+<img src="Screenshots/1.png" height="400">
+<img src="Screenshots/3.png" height="400">
+<img src="Screenshots/4.png" height="400">
+<img src="Screenshots/5.png" height="400">
+<img src="Screenshots/2.png" height="400">
+</p>
+
 # Demo Video
 [![demo video](http://img.youtube.com/vi/TkRxzKUXKuU/0.jpg)](http://www.youtube.com/watch?v=TkRxzKUXKuU)
 
